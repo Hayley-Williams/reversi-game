@@ -1,0 +1,27 @@
+{
+  "name": "reversi-game",
+  "version": "1.0.0",
+  "description": "This is the game of Reversi",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hayley-Williams/reversi-game.git"
+  },
+  "keywords": [
+    "reversi",
+    "Reversi"
+  ],
+  "author": "Hayley L. Williams",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Hayley-Williams/reversi-game/issues"
+  },
+  "homepage": "https://github.com/Hayley-Williams/reversi-game#readme",
+  "dependencies": {
+    "node-static": "^0.7.11",
+    "socket.io": "^2.3.0"
+  }
+}
