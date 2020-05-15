@@ -7,10 +7,15 @@ fucntion getURLParameters(whichParam)
   var pageURLVariables = pageURL.split('&');
   for(var i = 0; i < pageURLVariables.length; i++){
     var parameterName = pageURLVariables[i].split('=');
-    if (parameterName[0] == whichParam){
+    if(parameterName[0] == whichParam){
       return parameterName[1];
     }
   }
 }
 
-$('#messages').append('<h4>' +getURLParameters('username')+'</h4'>);
+var username = getURLParameters('username');
+if('undefined' == typeof username || !username){
+  username = 'Anonymous_'+Math.random();
+}
+
+$('#messages').append('<h4>'+username+'</h4>');
