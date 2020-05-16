@@ -1,7 +1,7 @@
 /* Functions for general use */
 /* This function returns the value associated with 'whichParam' on the URL */
 
-fucntion getURLParameters(whichParam)
+function getURLParameters(whichParam)
 {
   var pageURL = window.location.search.substring(1);
   var pageURLVariables = pageURL.split('&');
@@ -19,3 +19,11 @@ if('undefined' == typeof username || !username){
 }
 
 $('#messages').append('<h4>'+username+'</h4>');
+
+/* Connect to the socket server */
+
+var socket = io.connect();
+
+socket.on('log',function(array){
+  console.log.apply(console,array);
+}):
