@@ -136,9 +136,9 @@ io.sockets.on('connection', function (socket) {
   {
       'room': room to join,
       'username': username of person sending the message,
-      'message' :the message to the send
+      'message' :the message to send
  }
- send_message response:
+ send_message_response:
  {
     'result': 'success',
     'username' : username of the person that spoke,
@@ -156,7 +156,7 @@ io.sockets.on('connection', function (socket) {
    if(('undefined' === typeof payload) || !payload){
      var error_message = 'send_message had no payload, command aborted';
      log(error_message);
-     socket.emit('send_message response', {
+     socket.emit('send_message_response', {
                    result: 'fail',
                    message: error_message
                  });
@@ -195,7 +195,7 @@ io.sockets.on('connection', function (socket) {
      return;
    }
 
-   var success_data={
+   var success_data = {
                   result: 'success',
                   room: room,
                   username: username,
