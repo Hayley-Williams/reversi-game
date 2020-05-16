@@ -18,6 +18,8 @@ if('undefined' == typeof username || !username){
   username = 'Anonymous_'+Math.random();
 }
 
+var chat_room = 'One_Room';
+
 /* Demonstrates the username into the web page
 $('#messages').append('<h4>'+username+'</h4>');
 */
@@ -25,8 +27,6 @@ $('#messages').append('<h4>'+username+'</h4>');
 /* Connect to the socket server */
 
 var socket = io.connect();
-
-var chat_room = 'One_Room';
 
 socket.on('log',function(array){
   console.log.apply(console,array);
@@ -45,6 +45,6 @@ $(function(){
   payload.room = chat_room;
   payload.username = username;
 
-  console.log('*** Client Log Message \'join_room'\ +'JSON.stringify(payload)');
+  console.log('*** Client Log Message: \'join_room\' payload: '+JSON.stringify(payload));
   socket.emit('join_room',payload);
 });

@@ -52,7 +52,8 @@ io.sockets.on('connection', function (socket) {
       log('A web site disconnected from the server');
     });
 
-    /* Joined room command */
+
+    /* join_room command */
     /* payload:
       {
           'room': room to join,
@@ -106,7 +107,7 @@ io.sockets.on('connection', function (socket) {
       }
       socket.join(room);
 
-      var roomObject = io.sockets.adapter.rooms[rooms];
+      var roomObject = io.sockets.adapter.rooms[room];
       if(('undefined' === typeof roomObject) || !roomObject){
         var error_message = 'join_room could not create a room (internal error), command aborted';
         log(error_message);
@@ -122,7 +123,7 @@ io.sockets.on('connection', function (socket) {
                       result: 'success',
                       room: room,
                       username: username,
-                      membership: (numClients + 1),
+                      membership: (numClients + 1)
                     };
         io.sockets.in(room).emit('join_room_response',success_data);
         log('Room ' + room + ' was just joined by ' + username + '.');
