@@ -126,7 +126,7 @@ io.sockets.on('connection', function (socket) {
                       membership: (numClients + 1)
                     };
         io.sockets.in(room).emit('join_room_response',success_data);
-        log('Room ' + room + ' was just joined by ' + username + '.');
+        log('Room ' + room + ' was only joined by ' + username + '.');
     });
 
 
@@ -152,7 +152,7 @@ io.sockets.on('connection', function (socket) {
  */
 
  socket.on('send_message', function(payload){
-   log('server received a command', 'send_message', payload);
+   log('server received a message command', 'send_message', payload);
    if(('undefined' === typeof payload) || !payload){
      var error_message = 'send_message had no payload, command aborted';
      log(error_message);
