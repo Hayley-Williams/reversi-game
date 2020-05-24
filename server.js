@@ -120,7 +120,7 @@ io.sockets.on('connection', function (socket) {
         players[socket.id].username = username;
         players[socket.id].room = room;
 
-        /* Actually have the user jjoin the room */
+        /* Actually have the user join the room */
         socket.join(room);
 
         /* Get the room object */
@@ -150,7 +150,7 @@ io.sockets.on('connection', function (socket) {
         log('join_room success');
     });
 
-    socket.on('disconnect',function(socket){
+    socket.on('disconnect',function(){
         log('Client disconnected '+JSON.stringify(players[socket.id]));
 
         if('undefined' !== typeof players[socket.id] && players[socket.id]){
