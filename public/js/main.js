@@ -23,12 +23,11 @@ if('undefined' == typeof chat_room || !chat_room){
     chat_room = 'lobby';
 }
 
-/* Demonstrates the username into the web page
+/* Demonstrates the username into the web page*/
 $('#messages').append('<h4>'+username+'</h4>');
-*/
+
 
 /* Connect to the socket server */
-
 var socket = io.connect();
 /* What to do when the server sends me a log message*/
 socket.on('log',function(array){
@@ -42,14 +41,17 @@ socket.on('join_room_response',function(payload){
     return;
   }
 
-  /* If we are notified that we are joiing the room, then ignore it.*/
+  /* If we are notified that we are joining the room, then ignore it.*/
   if(payload.socket_id == socket.id){
     return;
   }
 
+
+
   /*If someone joined then add a new row to the lobby table */
   var dom_elements = $('.socket_'+payload.socket_id);
-  /* If we don't alreadyhave an entry for this person */
+
+  /* If we don't already have an entry for this person */
   if(dom_elements.length == 0){
     var nodeA = $('<div></div>');
     nodeA.addClass('socket_'+payload.socket_id);
@@ -65,14 +67,14 @@ socket.on('join_room_response',function(payload){
     nodeB.addClass('col-9 text-right');
     nodeB.append('<h4>'+payload.username+'</h4>');
 
-    nodeC.addClass('col-3 text-left');
+    nodeC.addClass('cold-3 text-left');
     var buttonC = makeInviteButton();
     nodeC.append(buttonC);
 
     nodeA.hide();
     nodeB.hide();
     nodeC.hide();
-    $('#players').append(nodeA, nodeB, nodeC);
+    $('#players').append(nodeA,nodeB,nodeC);
     nodeA.slideDown(1000);
     nodeB.slideDown(1000);
     nodeC.slideDown(1000);
@@ -91,9 +93,6 @@ else{
   newNode.slideDown(1000);
 });
 
-/* Not sure what is up with this line below*/
-$('#messages').append('<p>New user joined the room: '+payload.username+'</p>');
-})
 
 /*-------------------------*/
 /* What to do when the server says that somneone has left the room.*/
@@ -149,7 +148,7 @@ function send_message(){
 
 function makeInviteButton(){
 
-    var newHTML = '<button type=\'button\' class=\'btn btn-outline-primary\'>Invite</button>;
+    var newHTML = '<button type=\'button\' class=\'btn btn-outline-primary\ '>Invite</button>;
     var newNode = $(newHTML);
     return(newNode);
 }
