@@ -64,10 +64,10 @@ socket.on('join_room_response',function(payload){
 
     nodeA.addClass('w-100');
 
-    nodeB.addClass('col-9 text-right');
+    nodeB.addClass('cold-3 text-right');
     nodeB.append('<h4>'+payload.username+'</h4>');
 
-    nodeC.addClass('cold-3 text-left');
+    nodeC.addClass('cold-3 text-right');
     var buttonC = makeInviteButton();
     nodeC.append(buttonC);
 
