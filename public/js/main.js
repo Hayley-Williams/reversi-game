@@ -153,9 +153,6 @@ $('.socket_'+payload.socket_id+' button').replaceWith(newNode);
 });
 
 
-  $('#messages').append('<p><b>'+payload.username+' says: </b>'+payload.message+'</p>');
-
-
 socket.on('send_message_response',function(payload){
   if(payload.result == 'fail'){
     alert(payload.message);
