@@ -81,6 +81,7 @@ socket.on('join_room_response',function(payload){
     nodeC.slideDown(1000);
   }
 else{
+    uninvite(payload.socket_id);
     var buttonC = makeInviteButton(payload.socket_id);
     $('.socket_'+payload.socket_id+' button').replaceWith(buttonC);
     dom_elements.slideDown(1000);
@@ -149,7 +150,7 @@ socket.on('invited',function(payload){
     alert(payload.message);
     return;
   }
-  var newNode = makePlayButton();
+  var newNode = makePlayButton(payload.socket_id);
 $('.socket_'+payload.socket_id+' button').replaceWith(newNode);
 });
 
@@ -190,24 +191,51 @@ $('.socket_'+payload.socket_id+' button').replaceWith(newNode);
 
 
 
+/* ------------------------------------------------------- */
+/* Send a game_start message to the server */
+function game_start(who){
+  var payload = {};
+  payload.requested_user = who;
 
+  console.log('*** Client Log Message: \'game_start\' payload: '+JSON.stringify(payload));
+  socket.emit('game_start',payload);
+}
+
+/* Handle a notification that we have been engaged */
+socket.on('game_start_response',function(payload){
+  if(payload.result == 'fail'){
+    alert(payload.message);
+    return;
+  }
+  var newNode = makeEngagedButton(payload.socket_id);
+$('.socket_'+payload.socket_id+' button').replaceWith(newNode);
+
+/* Jump to a new page */
+window.location.href = 'game.html?usernmae='+username+'&game_id='+payload.game_id;
+});
+/* ------------------------------------------------------- */
+
+
+function send_message(){
+  var payload = {};
+  payload.room = chat_room;
+  payload.message = $('#send_message_holder').val();
+  console.log('*** Client Log Message: \'send_message\' payload: '+JSON.stringify(payload));
+  socket.emit('send_message',payload);
+}
 
 socket.on('send_message_response',function(payload){
   if(payload.result == 'fail'){
     alert(payload.message);
     return;
   }
-  $('#messages').append('<p><b>'+payload.username+' says: </b>'+payload.message+'</p>');
-});
 
-function send_message(){
-  var payload = {};
-  payload.room = chat_room;
-  payload.username = username;
-  payload.message = $('#send_message_holder').val();
-  console.log('*** Client Log Message: \'send_message\' payload: '+JSON.stringify(payload));
-  socket.emit('send_message',payload);
-}
+  var newHTML = '<p><b>'+payload.username+' says: </b> '+payload.message+'</p>';
+  var newNode = $(newHTML);
+  newNode.hide();
+  $('#messages').append(newNode);
+  newNode.slideDown(1000);
+});
 
 
 function makeInviteButton(socket_id){
@@ -228,13 +256,16 @@ function makeInvitedButton(socket_id){
     return(newNode);
 }
 
-function makePlayButton(){
+function makePlayButton(socket_id){
     var newHTML = '<button type=\'button\' class=\'btn btn-success\'>Play</button>';
     var newNode = $(newHTML);
+    newNode.click(function(){
+      game_start(socket_id);
+    });
     return(newNode);
 }
 
-function makeEngageButton(){
+function makeEngagedButton(){
     var newHTML = '<button type=\'button\' class=\'btn btn-danger\'>Engaged</button>';
     var newNode = $(newHTML);
     return(newNode);
