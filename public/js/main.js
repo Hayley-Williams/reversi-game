@@ -279,6 +279,12 @@ $(function(){
 
   console.log('*** Client Log Message: \'join_room\' payload: '+JSON.stringify(payload));
   socket.emit('join_room',payload);
+
+ $('#quit').append('<a href="lobby.html?username='+username+'" class="btn btn-danger btn-default active" role="button" aria-pressed="true">Quit</a>');
+ });
+
+ )
+
 });
 
 
@@ -334,9 +340,18 @@ $('#my_color').html('<h3 id="my_color">I am '+my_color+' </h3>');
 
   /* Animate changes to the board */
 
+  var blacksum = 0;
+  var whitesum = 0;
   var row,column;
   for(row = 0; row < 8; row++){
       for(column = 0; column < 8; column++){
+        if(board[row][column] == 'b'){
+          blacksum++;
+        }
+        if(board[row][column] == 'w'){
+          whitesum++;
+        }
+
         /* If a board space has changed */
         if(old_board[row][column] != board [row][column]){
           if(old_board[row][column] == '?' && board[row][column] == ' '){
@@ -390,6 +405,9 @@ $('#my_color').html('<h3 id="my_color">I am '+my_color+' </h3>');
       }
   }
 }
+$('#blacksum').html(blacksum);
+$('#whitesum').html(whitesum);
+
 
   old_board = board;
 });
@@ -403,4 +421,18 @@ socket.on('play_token_response',function(payload){
     alert(payload.message);
     return;
   }
+});
+
+socket.on('game_over',function(payload){
+
+  console.log('*** Client Log Message: \'game_over\'\n\tpayload: '+JSON.stringify(payload));
+  /* Check for a good play token response*/
+  if(payload.result == 'fail'){
+    console.log(payload.message);
+    return;
+  }
+/* Jump to a new page */
+
+$('#game_over').html('<h1>Game Over</h1><h2>'+payload.who_won+' won!</h2>');
+$('#game_over').append('<a href="lobby.html?username='+username+'" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Return to the Lobby</a>');
 });
