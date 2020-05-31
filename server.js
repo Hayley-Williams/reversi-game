@@ -695,7 +695,7 @@ function create_new_game(){
   var d = new Date();
   new_game.last_move_time = d.getTime();
 
-  new_game.whose_turn = 'white';
+  new_game.whose_turn = 'black';
 
   new_game.board = [
                       [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -721,8 +721,7 @@ function send_game_update(socket, game_id, message){
   }
   /* Make sure only two people are in the game room */
 
-var roomObject;
-var
+  var roomObject;
 
   /* Assign this socket a color */
   /* Send the game update */

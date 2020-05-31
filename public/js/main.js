@@ -65,10 +65,10 @@ socket.on('join_room_response',function(payload){
 
     nodeA.addClass('w-100');
 
-    nodeB.addClass('cold-3 text-right');
+    nodeB.addClass('text-right');
     nodeB.append('<h4>'+payload.username+'</h4>');
 
-    nodeC.addClass('cold-3 text-right');
+    nodeC.addClass('text-right');
     var buttonC = makeInviteButton(payload.socket_id);
     nodeC.append(buttonC);
 
@@ -313,7 +313,6 @@ socket.on('game_update',function(payload){
   }
 
 console.log('*** Please print this: '+socket.id)
-console.log('*** Please print this: '+payload.player_white)
 
   /*Update my color */
 if(socket.id == payload.game.player_white.socket){
