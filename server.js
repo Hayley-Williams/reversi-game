@@ -784,17 +784,18 @@ function send_game_update(socket, game_id, message){
                       game_id: game_id
                       };
   io.in(game_id).emit('game_update',success_data);
+
   /* Check to see if the game is over */
  var row,column;
  var count = 0;
- for(row = 0; row < 8, row ++){
+ for(row = 0; row < 8; row++){
    for(column = 0; column < 8; column++){
-     if(games[game.id].board[row][column] != ' '){
+     if(games[game_id].board[row][column] != ' '){
        count++;
      }
    }
  }
- if (count == 64){
+ if(count == 64){
    /* Send a game over message */
    var success_data = {
         result: 'success',
