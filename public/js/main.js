@@ -281,9 +281,6 @@ $(function(){
   socket.emit('join_room',payload);
 
  $('#quit').append('<a href="lobby.html?username='+username+'" class="btn btn-danger btn-default active" role="button" aria-pressed="true">Quit</a>');
- });
-
- )
 
 });
 
@@ -322,11 +319,11 @@ socket.on('game_update',function(payload){
 console.log('*** Please print this: '+socket.id)
 
   /*Update my color */
-if(socket.id == payload.game.player_white.socket){
-  my_color = 'white';
-}
-else if(socket.id == payload.game.player_black.socket){
+if(socket.id == payload.game.player_black.socket){
   my_color = 'black';
+}
+else if(socket.id == payload.game.player_white.socket){
+  my_color = 'white';
 }
 else{
   /* Something weird going on, like three people playing at once */
@@ -336,7 +333,8 @@ else{
 }
 
 
-$('#my_color').html('<h3 id="my_color">I am '+my_color+' </h3>');
+$('#my_color').html('<h3 id="my_color">I am '+my_color+'</h3>');
+$('#my_color').append('<h4>It is '+payload.game.whose_turn+'\'s turn</h4>');
 
   /* Animate changes to the board */
 
@@ -358,13 +356,13 @@ $('#my_color').html('<h3 id="my_color">I am '+my_color+' </h3>');
             $('#'+row+'_'+column).html('<img src="assets/images/empty.gif" alt="empty square"/>');
           }
           else if(old_board[row][column] == '?' && board[row][column] == 'w'){
-            $('#'+row+'_'+column).html('<img src="assets/images/empty_to_white.gif" alt="white square"/>');
+            $('#'+row+'_'+column).html('<img src="assets/images/e_to_w.gif" alt="white square"/>');
           }
           else if(old_board[row][column] == '?' && board[row][column] == 'b'){
             $('#'+row+'_'+column).html('<img src="assets/images/empty_to_black.gif" alt="black square"/>');
           }
           else if(old_board[row][column] == ' ' && board[row][column] == 'w'){
-            $('#'+row+'_'+column).html('<img src="assets/images/empty_to_white.gif" alt="white square"/>');
+            $('#'+row+'_'+column).html('<img src="assets/images/e_to_w.gif" alt="white square"/>');
           }
           else if(old_board[row][column] == ' ' && board[row][column] == 'b'){
             $('#'+row+'_'+column).html('<img src="assets/images/empty_to_black.gif" alt="black square"/>');
@@ -384,9 +382,14 @@ $('#my_color').html('<h3 id="my_color">I am '+my_color+' </h3>');
           else{
             $('#'+row+'_'+column).html('<img src="assets/images/error.gif" alt="error"/>');
           }
-          /* Set up interactivity */
-          $('#'+row+'_'+column).off('click');
-          if(board[row][column] == ' '){
+        }
+
+        /* Set up interactivity */
+        $('#'+row+'_'+column).off('click');
+        $('#'+row+'_'+column).removeClass('hover_over');
+
+        if(payload.game.whose_turn === my_color){
+          if(payload.game.legal_moves[row][column] === my_color.substr(0,1)){
             $('#'+row+'_'+column).addClass('hovered_over');
             $('#'+row+'_'+column).click(function(r,c){
                 return function(){
@@ -394,16 +397,13 @@ $('#my_color').html('<h3 id="my_color">I am '+my_color+' </h3>');
                   payload.row = r;
                   payload.column = c;
                   payload.color =  my_color;
-                  console.log('*** Client Log Message: \'play_token\' playload: '+JSON.stringify(payload));
+                  console.log('*** Client Log Message: \'play_token\' payload: '+JSON.stringify(payload));
                   socket.emit('play_token',payload);
                 };
               }(row,column));
           }
-          else{
-            $('#'+row+'_'+column).removeClass('hovered_over');
-          }
       }
-  }
+    }
 }
 $('#blacksum').html(blacksum);
 $('#whitesum').html(whitesum);
