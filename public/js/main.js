@@ -317,8 +317,6 @@ socket.on('game_update',function(payload){
       return;
   }
 
-console.log('*** Please print this: '+socket.id)
-
   /*Update my color */
 if(socket.id == payload.game.player_black.socket){
   my_color = 'black';
@@ -337,7 +335,7 @@ else{
 $('#my_color').html('<h3 id="my_color">I am '+my_color+'</h3>');
 $('#my_color').append('<h4>It is '+payload.game.whose_turn+'\'s turn. Elapsed time <span id="elapsed"></span></h4>');
 
-clearInterval(interval_timer);
+clearInterval(interval_timer); 
 interval_timer = setInterval(function(last_time){
       return function(){
         //Do the work of updating UI
@@ -346,7 +344,7 @@ interval_timer = setInterval(function(last_time){
         var minutes = Math.floor(elapsedmilli / (60 * 1000));
         var seconds = Math.floor((elapsedmilli % (60 * 1000))/ 1000);
 
-        if seconds < 10){
+        if(seconds < 10){
           $('#elapsed').html(minutes+':0'+seconds);
         }
         else{
