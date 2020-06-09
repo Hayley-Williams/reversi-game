@@ -28,6 +28,6 @@ table#game_board td{
 }
 
 td.hovered_over:hover {
-  background:url('http://localhost:8080/assets/images/hover.gif'), rgb(0,255,0);
+  background: url('.../images/hover.gif'), rgb(0,255,0);
   background-size: 100% 100%;
 }
