@@ -22,6 +22,6 @@
   "homepage": "https://github.com/Hayley-Williams/reversi-game#readme",
   "dependencies": {
     "node-static": "^0.7.11",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.5.0"
   }
 }
